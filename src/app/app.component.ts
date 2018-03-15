@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Github Uses Searchers';
+
+
+  onSubmit() {
+      console.log("Form Submitted!");
+  }
+
 }
