@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { SearcherComponent } from'./searcher/searcher.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,8 +11,6 @@ export class AppComponent {
   title = 'Github Uses Searchers';
 
 
-  onSubmit() {
-      console.log("Form Submitted!");
-  }
+ 
 
 }

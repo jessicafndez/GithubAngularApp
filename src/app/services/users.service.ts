@@ -60,4 +60,3 @@ function getCharacterId(c: any) {
   let characterId = c.url.replace('https://api.github.com/user/','').replace('/','');
   return characterId;
 }
-

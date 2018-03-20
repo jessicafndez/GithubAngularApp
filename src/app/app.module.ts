@@ -1,18 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
-
-import  { UsersServiceService } from './services/users.service';
+import { UsersServiceService } from './services/users.service';
+import { SearcherComponent } from './searcher/searcher.component';
+import { GithubapiService } from './services/githubapi.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent
+    UsersComponent,
+    SearcherComponent
   ],
   imports: [
     BrowserModule,
