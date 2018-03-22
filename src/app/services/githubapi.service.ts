@@ -15,15 +15,9 @@ export class GithubapiService {
 
   constructor(private http: Http) { }
 
-  get(name: string): Observable<Users> {
-    // let users = this.http
-    // .get(`${this.baseUrl}${name}${this.searchQualifier}`, {headers: this.getHeaders()})
-    // .map(mapUsers);
-
-    // console.log("Users: ");
-    // console.log(users);
-    let users = "Res";
-    return users;
+  get(name: string) {
+    return  this.http
+    .get(`${this.baseUrl}${name}${this.searchQualifier}`, {headers: this.getHeaders()});
   }
 
   private getHeaders() {
@@ -41,4 +35,5 @@ function toUser(userData: any) {
   let user = <Users>({
     id: userData.id
   });
+
 }

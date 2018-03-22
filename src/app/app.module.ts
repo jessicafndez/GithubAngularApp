@@ -22,7 +22,7 @@ import { UsersListComponent } from './users-list/users-list.component';
     FormsModule,         // <-- add this  
     ReactiveFormsModule 
   ],
-  providers: [],
+  providers: [GithubapiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
