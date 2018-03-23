@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
@@ -19,8 +20,9 @@ import { UsersListComponent } from './users-list/users-list.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,         // <-- add this  
-    ReactiveFormsModule 
+    FormsModule,         
+    ReactiveFormsModule,
+    HttpModule
   ],
   providers: [GithubapiService],
   bootstrap: [AppComponent]

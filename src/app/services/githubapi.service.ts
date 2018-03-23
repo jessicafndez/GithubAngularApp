@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -13,17 +13,26 @@ export class GithubapiService {
   private searchQualifier: string = "+in:login";
   //https://api.github.com/search/users?q=jessica+in:login
 
-  constructor(private http: Http) { }
+  private headers: Headers = new Headers();
+  private requestOptions: RequestOptionsArgs = {};
+  private apiServer: string = "https://api.github.com";
 
-  get(name: string) {
-    return  this.http
-    .get(`${this.baseUrl}${name}${this.searchQualifier}`, {headers: this.getHeaders()});
+  constructor(private http: Http) { 
+    this.headers.set("Content-Type", "application/json");
+    this.requestOptions.headers = this.headers;
   }
 
+  get(endPoint: string, options?: RequestOptionsArgs): Observable<Response> {
+    return this.http.get(this.createUrl(endPoint), this.getRequestOptions(options));
+}
   private getHeaders() {
     let headers = new Headers();
     headers.append('Accept', 'applicaion/json');
     return headers;
+  }
+
+  createUrl(endPoint):string {
+    
   }
 }
 

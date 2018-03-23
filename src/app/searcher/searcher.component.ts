@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { GithubapiService } from '../services/githubapi.service';
 
 //users list 
-import { UsersListComponent } from '../users-list/users-list.component';
+//import { UsersListComponent } from '../users-list/users-list.component';
 
 @Component({
   selector: 'app-searcher',
@@ -15,8 +15,7 @@ import { UsersListComponent } from '../users-list/users-list.component';
 
 export class SearcherComponent implements OnInit {
 
-  constructor(private githubApi: GithubapiService,
-  private usersListComponent: UsersListComponent) { }
+  constructor(private githubApiService: GithubapiService) { }
 
   ngOnInit() {
 
@@ -26,6 +25,11 @@ export class SearcherComponent implements OnInit {
     console.log("Form Submitted!");
     console.log(searcherForm.value.searchUser);
     var searchName = searcherForm.value.searchUser;
+
+    var a = this.githubApiService
+      .get(searchName);
+
+      console.log(a);
     
    // var searcherResults = this.githubApi.get(searchName);
     
