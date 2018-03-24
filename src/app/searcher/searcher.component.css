@@ -1,0 +1,14 @@
+.userContent {
+    margin-bottom: 10px;
+}
+.userBox {
+    border: 1px solid #e0e0e0;
+    padding: 5px;
+}
+.userBox img {
+    width: 100%;
+}
+
+.word-wrap {
+    word-wrap: break-word;
+} 

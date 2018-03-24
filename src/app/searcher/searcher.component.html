@@ -1,7 +1,22 @@
 <form #searcherForm="ngForm" (ngSubmit)="onSubmit(searcherForm)">
   <div class="form-group">
-    <label for="name">Name</label>
     <input type="text" class="form-control" id="name" name="searchUser" [(ngModel)]="userName" required>
   </div>
   <button type="submit" class="btn btn-success">Submit</button>
 </form>
+Loading<span class="d">.</span><span class="d d-2">.</span><span class="d d-3">.</span>
+<div class="content">
+  <div class="row">
+    <div class="userContent col-md-3" *ngFor="let u  of users">
+      <div class="userBox">
+        <div class="">{{u.login}}</div>
+        <div class="">
+          <img src="{{u.avatar_url}}"/>
+        </div>
+        <div class="word-wrap">
+          <a href="{{u.url}}">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>

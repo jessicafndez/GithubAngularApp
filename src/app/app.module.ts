@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
-import { UsersServiceService } from './services/users.service';
 import { SearcherComponent } from './searcher/searcher.component';
 import { GithubapiService } from './services/githubapi.service';
 import { UsersListComponent } from './users-list/users-list.component';
