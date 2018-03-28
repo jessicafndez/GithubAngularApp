@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { GithubapiService } from '../services/githubapi.service';
@@ -9,6 +9,10 @@ import { UsersComponent } from '../users/users.component';
 
 //interfaces
 import { User } from '../interfaces/user';
+import { Users } from '../interfaces/users';
+import { Subscriber } from 'rxjs/Subscriber';
+import { Subscription } from 'rxjs/Subscription';
+import { Observer } from 'rxjs/Observer';
 
 @Component({
   selector: 'app-searcher',
@@ -18,13 +22,17 @@ import { User } from '../interfaces/user';
 
 
 export class SearcherComponent implements OnInit {
-  users: User[];
+ // users: User[];
+ // userSearcher: Observer;
+ user: User[];
+  @Output() searchUsers =  new EventEmitter();
+
+
  // user: User;
 
   constructor(private githubApiService: GithubapiService) { }
 
   ngOnInit() {
-
   }
 
   onSubmit(searcherForm: NgForm) {
@@ -35,12 +43,27 @@ export class SearcherComponent implements OnInit {
     // this.githubApiService.get(searchName)
     // .subscribe((user)=>{this.users=user});
 
-    var a = this.githubApiService.getUsers(searchName)
-    .subscribe((users: User[]) => this.users = users);
+    // var a = this.githubApiService.getUsers(searchName)
+    // .subscribe((users: User[]) => this.users = users);
 
+    // this.userSearcher = this.githubApiService.getUsers(searchName)
+    // .subscribe((users: User[]) => this.users = users);
+
+    let a = this.githubApiService.getUsers(searchName);
+
+    this.githubApiService.getUsers(searchName)
+    .map((user: Array<any>) => {
+      let result:Array<User> = [];
+      if(user) {
+        user.forEach((erg) => {
+          result.push(new User(erg.login, erg.id, erg.avatar_url, erg.url, erg.email, erg.followers));
+        });
+      }
+      return result; // <<<=== missing return
+    })
+    .subscribe(user => this.user = user);
 
      console.log(a);
-     console.log(this.users);
     
    // var searcherResults = this.githubApi.get(searchName);
     

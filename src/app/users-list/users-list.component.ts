@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 //interface, just if needed
 import { Users } from '../interfaces/users';
+import { Subscriber } from 'rxjs/Subscriber';
 
 @Component({
   selector: 'app-users-list',
@@ -16,10 +17,23 @@ export class UsersListComponent implements OnInit {
 
 //  users: Users[] = [];
 
-  constructor() { }
+  @Input() data: Subscriber<Users[]>;
+
+  constructor() { 
+    console.log("data....");
+    console.log(this.data);
+  }
 
   ngOnInit() {
+    console.log("data....");
+    console.log(this.data);
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("Simple changes: ");
+    console.log(changes.data);
+  }
+
 
 
 }

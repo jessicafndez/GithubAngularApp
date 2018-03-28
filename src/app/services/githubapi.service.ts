@@ -8,10 +8,8 @@ import { User } from '../interfaces/user';
 
 @Injectable()
 export class GithubapiService {
-
   private searchUsersUrl: string = 'https://api.github.com/search/users?q=';
   private searchQualifier: string = "+in:login";
-  
   private headers: Headers = new Headers();
 
   constructor(private http: Http) { }
