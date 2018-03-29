@@ -24,8 +24,10 @@ import { Observer } from 'rxjs/Observer';
 export class SearcherComponent implements OnInit {
  // users: User[];
  // userSearcher: Observer;
- user: User[];
-  @Output() searchUsers =  new EventEmitter();
+ users: User[] = [];
+ // @Output() searchUsers =  new EventEmitter();
+
+ userSearcher: Subscription<User[]>;
 
 
  // user: User;
@@ -46,22 +48,22 @@ export class SearcherComponent implements OnInit {
     // var a = this.githubApiService.getUsers(searchName)
     // .subscribe((users: User[]) => this.users = users);
 
-    // this.userSearcher = this.githubApiService.getUsers(searchName)
-    // .subscribe((users: User[]) => this.users = users);
-
     let a = this.githubApiService.getUsers(searchName);
 
-    this.githubApiService.getUsers(searchName)
-    .map((user: Array<any>) => {
-      let result:Array<User> = [];
-      if(user) {
-        user.forEach((erg) => {
-          result.push(new User(erg.login, erg.id, erg.avatar_url, erg.url, erg.email, erg.followers));
-        });
-      }
-      return result; // <<<=== missing return
-    })
-    .subscribe(user => this.user = user);
+    // this.githubApiService.getUsers(searchName)
+    // .map((user: Array<any>) => {
+    //   let result:Array<User> = [];
+    //   if(user) {
+    //     user.forEach((erg) => {
+    //       result.push(new User(erg.login, erg.id, erg.avatar_url, erg.url, erg.email, erg.followers));
+    //     });
+    //   }
+    //   return result; // <<<=== missing return
+    // })
+    // .subscribe(user => this.user = user);
+
+    this.userSearcher = this.githubApiService.getUsers(searchName)
+    .subscribe((users: User[]) => this.users = users)
 
      console.log(a);
     
