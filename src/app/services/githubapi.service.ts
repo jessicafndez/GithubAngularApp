@@ -12,6 +12,8 @@ export class GithubapiService {
   private searchQualifier: string = "+in:login";
   private headers: Headers = new Headers();
 
+  private totalValue: number;
+
   constructor(private http: Http) { }
 
   getUsers(search: string): Observable<User[]> {
@@ -29,6 +31,13 @@ export class GithubapiService {
 
   createUrl(search):string {
     return this.searchUsersUrl + search + this.searchQualifier;
+  }
+
+  getTotalResults(search): Observable<void> {
+    let total = this.http
+    .get(this.createUrl(search), {headers: this.getHeaders()})
+    .map((response: Response) => {this.totalValue = response.json().total_count});
+    return total;
   }
 }
 

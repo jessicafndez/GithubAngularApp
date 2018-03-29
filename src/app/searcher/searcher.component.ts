@@ -22,13 +22,11 @@ import { Observable } from 'rxjs/Observable';
 
 
 export class SearcherComponent implements OnInit {
- // users: User[];
-  //userSearcher: Observer;
  users: User[] = [];
  subscription: Subscription;
- // @Output() searchUsers =  new EventEmitter();
 
  private results: Observable<User[]>;
+ private totalResults: Observable<void>;
 
 
  // user: User;
@@ -44,7 +42,10 @@ export class SearcherComponent implements OnInit {
     var searchName = searcherForm.value.searchUser;
 
    this.results = this.githubApiService.getUsers(searchName);
-    
+   this.totalResults = this.githubApiService.getTotalResults(searchName);
+
+   console.log(this.totalResults);
   }
+
 
 }
