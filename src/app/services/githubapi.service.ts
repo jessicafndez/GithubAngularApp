@@ -33,12 +33,27 @@ export class GithubapiService {
     return this.searchUsersUrl + search + this.searchQualifier;
   }
 
-  getTotalResults(search): Observable<void> {
+  getTotalResults(search): Observable<number> {
     let total = this.http
     .get(this.createUrl(search), {headers: this.getHeaders()})
-    .map((response: Response) => {this.totalValue = response.json().total_count});
+    .map((res: Response)=> res.json().total_count);
     return total;
   }
+
+  // getSearcherResults(page: number, search: string): Observable<Users[]> {
+  //   return this.http
+  //   .get(this.createUrl(search), {headers: this.getHeaders()})
+  //   .map((res: Response) => {});
+  // }
+
+  // getTypedPagedMilstones(page: number, pageSize: number): Observable<IPagedResponse<MileStoneModel>> {
+  //       return this.http.get(this.url + "/" + "/" + pageSize)
+  //           .map((res: Response) => {
+  //               this.pageResponse.data = <MileStoneModel[]>res.json();
+  //               this.pageResponse.total = res.json().Total;
+  //           })
+  //           .catch(this.handleError);
+  //   }
 }
 
 function mapUsers(response: Response): User[] {
@@ -57,4 +72,3 @@ function toUser(userData: any) {
   });
   return user;
 }
-

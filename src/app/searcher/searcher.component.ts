@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 
 import { GithubapiService } from '../services/githubapi.service';
 
-//users list 
+//users list
 import { UsersListComponent } from '../users-list/users-list.component';
 import { UsersComponent } from '../users/users.component';
 
@@ -22,14 +22,12 @@ import { Observable } from 'rxjs/Observable';
 
 
 export class SearcherComponent implements OnInit {
- users: User[] = [];
- subscription: Subscription;
+  users: User[] = [];
+  subscription: Subscription;
 
- private results: Observable<User[]>;
- private totalResults: Observable<void>;
-
-
- // user: User;
+  private results: Observable<User[]>;
+  private totalResults: number;
+  private resultsPerPage: number;
 
   constructor(private githubApiService: GithubapiService) { }
 
@@ -41,10 +39,22 @@ export class SearcherComponent implements OnInit {
     console.log(searcherForm.value.searchUser);
     var searchName = searcherForm.value.searchUser;
 
-   this.results = this.githubApiService.getUsers(searchName);
-   this.totalResults = this.githubApiService.getTotalResults(searchName);
+    this.results = this.githubApiService.getUsers(searchName);
+    let a = this.githubApiService.getTotalResults(searchName).subscribe(r=>this.totalResults = r);
 
-   console.log(this.totalResults);
+    this.githubApiService.getTotalResults(searchName).subscribe((value) => {
+      this.totalResults = value;
+      this.resultsPerPage = this.getPagesToShow(value);
+    });
+
+
+    console.log("results: ");
+    console.log(this.totalResults);
+    console.log("---");
+  }
+
+  getPagesToShow(totalResults: number) {
+    return totalResults/this.resultsPerPage;
   }
 
 

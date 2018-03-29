@@ -4,7 +4,7 @@
   </div>
   <button type="submit" class="btn btn-success">Submit</button>
 </form>
-Loading<span class="d">.</span><span class="d d-2">.</span><span class="d d-3">.</span>
+Loading<span class="d">.</span><span class="d d-2">.</span><span class="d d-3">.</span><br/>
 
-<label>{{totalResults | async }}</label>
- <app-users-list [data]="results"></app-users-list> 
+<label>Total results found: {{totalResults}}</label>
+<app-users-list [data]="results" [totalResuts]="></app-users-list> 
