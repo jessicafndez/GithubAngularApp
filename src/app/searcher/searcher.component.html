@@ -7,4 +7,14 @@
 Loading<span class="d">.</span><span class="d d-2">.</span><span class="d d-3">.</span><br/>
 
 <label>Total results found: {{totalResults}}</label>
-<app-users-list [data]="results" [totalResuts]="></app-users-list> 
+<app-users-list [data]="results" [totalResults]="totalResults"></app-users-list>
+
+<app-paginator
+  (goPage)="goToPage($event)"
+  (goNext)="onNext()"
+  (goPrev)="onPrev()"
+  [pagesToShow]="3"
+  [page]="page"
+  [perPage]="limit"
+  [count]="total">
+</app-paginator>

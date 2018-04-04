@@ -9,14 +9,18 @@ import { User } from '../interfaces/user';
 @Injectable()
 export class GithubapiService {
   private searchUsersUrl: string = 'https://api.github.com/search/users?q=';
-  private searchQualifier: string = "+in:login";
+  private searchQualifier: string = "+in:login&per_page=100";
   private headers: Headers = new Headers();
 
   private totalValue: number;
+  public pageNumber: number;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.pageNumber = 1;
+  }
 
-  getUsers(search: string): Observable<User[]> {
+  getUsers(search: string, page: number): Observable<User[]> {
+    this.pageNumber = page;
     let users = this.http
       .get(this.createUrl(search), {headers: this.getHeaders()})
       .map(mapUsers); //<- faster way, map result before return it

@@ -28,6 +28,7 @@ export class UsersListComponent implements OnInit {
   @Input() data: Subscriber<Users[]>;
   @Input() page;
   @Input() total;
+  @Input() totalResults: number;
 
   constructor(private githubApi: GithubapiService) { }
 
@@ -45,7 +46,7 @@ export class UsersListComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     console.log("Simple changes: ");
-    console.log(changes.data.currentValue);
+    console.log(changes.data);
 
   //  this.githubApi.getUsers('')
   }

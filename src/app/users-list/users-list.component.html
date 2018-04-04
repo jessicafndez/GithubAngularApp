@@ -13,15 +13,5 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </div>
-
-<app-paginator
-  (goPage)="goToPage($event)"
-  (goNext)="onNext()"
-  (goPrev)="onPrev()"
-  [pagesToShow]="3"
-  [page]="page"
-  [perPage]="limit"
-  [count]="total | async">
-</app-paginator>

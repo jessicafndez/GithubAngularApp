@@ -29,9 +29,17 @@ export class SearcherComponent implements OnInit {
   private totalResults: number;
   private resultsPerPage: number;
 
+  //pagination
+  loading = false;
+ // public total:number;
+  page = 1;
+  limit: number;
+  total: number;
+
   constructor(private githubApiService: GithubapiService) { }
 
   ngOnInit() {
+    this.resultsPerPage = 100;
   }
 
   onSubmit(searcherForm: NgForm) {
@@ -40,21 +48,48 @@ export class SearcherComponent implements OnInit {
     var searchName = searcherForm.value.searchUser;
 
     this.results = this.githubApiService.getUsers(searchName);
-    let a = this.githubApiService.getTotalResults(searchName).subscribe(r=>this.totalResults = r);
+    this.githubApiService.getTotalResults(searchName).subscribe((value)=> {
+      this.total = value;
+    });
 
     this.githubApiService.getTotalResults(searchName).subscribe((value) => {
       this.totalResults = value;
       this.resultsPerPage = this.getPagesToShow(value);
+      this.limit = 100;
+      this.total = value;
+      // this.total = value;
+      // this.limit = this.resultsPerPage;
     });
-
 
     console.log("results: ");
     console.log(this.totalResults);
     console.log("---");
   }
 
+  callForPage() {
+    
+  }
+
   getPagesToShow(totalResults: number) {
     return totalResults/this.resultsPerPage;
+  }
+
+  //method to new request
+  goToPage(n: number): void {
+    this.page = n;
+    console.log("go to page: " + n);
+    //recall endpoint
+  }
+
+  onNext(): void {
+    this.page++;
+    //recall endpoint
+    console.log("go to page: " + this.page);
+  }
+
+  onPrev(): void {
+    this.page--;
+    //recall endpoint
   }
 
 

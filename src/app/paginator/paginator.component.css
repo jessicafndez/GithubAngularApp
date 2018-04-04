@@ -2,8 +2,8 @@
     width: 100%;
     position: relative;
     flex: 1;
-    background: #000000;
-    display: flex;
+    background: white;
+    display: block;
     flex-direction: row;
     align-items: center;
 }

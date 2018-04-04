@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, SimpleChanges, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-paginator',
@@ -20,6 +20,11 @@ export class PaginatorComponent implements OnInit {
 
   ngOnInit() {
     console.log("count: " + this.count);
+  }
+
+  ngOnChange(changes: SimpleChanges) {
+    console.log("changes: " + changes);
+    console.log("count change: " + this.count);
   }
 
   getMin(): number {
@@ -60,6 +65,12 @@ export class PaginatorComponent implements OnInit {
     const pagesToShow = this.pagesToShow || 9;
     const pages: number[] = [];
     pages.push(p);
+    console.log(this.count);
+    console.log(this.perPage);
+    console.log("c: " + c);
+    console.log("p: " + p);
+    console.log("ps: " + pagesToShow);
+    console.log("pg: " + pages);
     const times = pagesToShow - 1;
     for (let i = 0; i < times; i++) {
       if (pages.length < pagesToShow) {
@@ -74,6 +85,10 @@ export class PaginatorComponent implements OnInit {
       }
     }
     pages.sort((a, b) => a - b);
+
+    console.log("Pages: ");
+    console.log(pages );
+
     return pages;
   }
 

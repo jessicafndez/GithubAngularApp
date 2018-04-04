@@ -1,0 +1,5 @@
+- UI: rework
+- Paginator min 3 but ... to max pages.
+- next() paginator.
+- before() paginator.
+- save current get data in array, when next(), push array
