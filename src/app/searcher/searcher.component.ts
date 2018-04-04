@@ -23,16 +23,19 @@ import { Observable } from 'rxjs/Observable';
 
 export class SearcherComponent implements OnInit {
   users: User[] = [];
+  userString: string;
   subscription: Subscription;
 
   private results: Observable<User[]>;
   private totalResults: number;
   private resultsPerPage: number;
 
+  private saveResults: User[] = [];
+
   //pagination
   loading = false;
  // public total:number;
-  page = 1;
+  public page = 1;
   limit: number;
   total: number;
 
@@ -47,10 +50,15 @@ export class SearcherComponent implements OnInit {
     console.log(searcherForm.value.searchUser);
     var searchName = searcherForm.value.searchUser;
 
-    this.results = this.githubApiService.getUsers(searchName);
-    this.githubApiService.getTotalResults(searchName).subscribe((value)=> {
-      this.total = value;
+    this.results = this.githubApiService.getUsers(searchName, this.page);
+
+    this.githubApiService.getUsers(searchName, this.page).subscribe((users)=> {
+      this.savedCurrentResults(users);
     });
+
+    // this.githubApiService.getTotalResults(searchName).subscribe((value)=> {
+    //   this.total = value;
+    // });
 
     this.githubApiService.getTotalResults(searchName).subscribe((value) => {
       this.totalResults = value;
@@ -66,8 +74,17 @@ export class SearcherComponent implements OnInit {
     console.log("---");
   }
 
+  savedCurrentResults(results: Users[]) {
+    console.log("Saving current values...");
+    console.log(results);
+    for(let i in results) {
+      this.saveResults.push(results[i]);
+    }
+  }
+
+  //in saved array
   callForPage() {
-    
+
   }
 
   getPagesToShow(totalResults: number) {
@@ -85,12 +102,17 @@ export class SearcherComponent implements OnInit {
     this.page++;
     //recall endpoint
     console.log("go to page: " + this.page);
+    this.githubApiService.getUsers(searchName, this.page).subscribe((users)=> {
+      this.savedCurrentResults(users);
+    });
   }
 
   onPrev(): void {
     this.page--;
     //recall endpoint
+
   }
+
 
 
 }
