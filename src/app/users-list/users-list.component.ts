@@ -25,7 +25,7 @@ export class UsersListComponent implements OnInit {
   public perPage: number;
   public pagesToShow: number;
 
-  @Input() data: Subscriber<Users[]>;
+  @Input() data: Users[];
   @Input() page;
   @Input() total;
   @Input() totalResults: number;

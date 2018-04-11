@@ -10,6 +10,7 @@ import { User } from '../interfaces/user';
 export class GithubapiService {
   private searchUsersUrl: string = 'https://api.github.com/search/users?q=';
   private searchQualifier: string = "+in:login&per_page=100";
+  private searchPage: string = "&page=";
   private headers: Headers = new Headers();
 
   private totalValue: number;
@@ -22,7 +23,7 @@ export class GithubapiService {
   getUsers(search: string, page: number): Observable<User[]> {
     this.pageNumber = page;
     let users = this.http
-      .get(this.createUrl(search), {headers: this.getHeaders()})
+      .get(this.createUrl(search, page), {headers: this.getHeaders()})
       .map(mapUsers); //<- faster way, map result before return it
     return users;
   }
@@ -33,8 +34,8 @@ export class GithubapiService {
     return headers;
   }
 
-  createUrl(search):string {
-    return this.searchUsersUrl + search + this.searchQualifier;
+  createUrl(search, page=1):string {
+    return this.searchUsersUrl + search + this.searchQualifier + this.searchPage + page;
   }
 
   getTotalResults(search): Observable<number> {
@@ -43,21 +44,6 @@ export class GithubapiService {
     .map((res: Response)=> res.json().total_count);
     return total;
   }
-
-  // getSearcherResults(page: number, search: string): Observable<Users[]> {
-  //   return this.http
-  //   .get(this.createUrl(search), {headers: this.getHeaders()})
-  //   .map((res: Response) => {});
-  // }
-
-  // getTypedPagedMilstones(page: number, pageSize: number): Observable<IPagedResponse<MileStoneModel>> {
-  //       return this.http.get(this.url + "/" + "/" + pageSize)
-  //           .map((res: Response) => {
-  //               this.pageResponse.data = <MileStoneModel[]>res.json();
-  //               this.pageResponse.total = res.json().Total;
-  //           })
-  //           .catch(this.handleError);
-  //   }
 }
 
 function mapUsers(response: Response): User[] {

@@ -20,7 +20,6 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./searcher.component.css']
 })
 
-
 export class SearcherComponent implements OnInit {
   users: User[] = [];
   userString: string;
@@ -29,6 +28,8 @@ export class SearcherComponent implements OnInit {
   private results: Observable<User[]>;
   private totalResults: number;
   private resultsPerPage: number;
+
+  private currentSearchString: string;
 
   private saveResults: User[] = [];
 
@@ -48,19 +49,15 @@ export class SearcherComponent implements OnInit {
   onSubmit(searcherForm: NgForm) {
     console.log("Form Submitted!");
     console.log(searcherForm.value.searchUser);
-    var searchName = searcherForm.value.searchUser;
+    this.currentSearchString = searcherForm.value.searchUser;
 
-    this.results = this.githubApiService.getUsers(searchName, this.page);
-
-    this.githubApiService.getUsers(searchName, this.page).subscribe((users)=> {
+    this.githubApiService.getUsers(this.currentSearchString, this.page)
+    .subscribe((users)=> {
       this.savedCurrentResults(users);
+      this.users = users;
     });
 
-    // this.githubApiService.getTotalResults(searchName).subscribe((value)=> {
-    //   this.total = value;
-    // });
-
-    this.githubApiService.getTotalResults(searchName).subscribe((value) => {
+    this.githubApiService.getTotalResults(this.currentSearchString).subscribe((value) => {
       this.totalResults = value;
       this.resultsPerPage = this.getPagesToShow(value);
       this.limit = 100;
@@ -100,11 +97,17 @@ export class SearcherComponent implements OnInit {
 
   onNext(): void {
     this.page++;
+    console.log("Go to page: " + this.page);
+
     //recall endpoint
-    console.log("go to page: " + this.page);
-    this.githubApiService.getUsers(searchName, this.page).subscribe((users)=> {
+    this.githubApiService.getUsers(this.currentSearchString, this.page)
+    .subscribe((users)=> {
       this.savedCurrentResults(users);
+      this.users = users;
+      console.log("actual users: ");
+      console.log(this.users);
     });
+    console.log("blahhh");
   }
 
   onPrev(): void {
