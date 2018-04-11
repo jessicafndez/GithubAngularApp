@@ -25,7 +25,7 @@ export class SearcherComponent implements OnInit {
   userString: string;
   subscription: Subscription;
 
-  private results: Observable<User[]>;
+  private results: Users[] = [];
   private totalResults: number;
   private resultsPerPage: number;
 
@@ -35,7 +35,6 @@ export class SearcherComponent implements OnInit {
 
   //pagination
   loading = false;
- // public total:number;
   public page = 1;
   limit: number;
   total: number;
@@ -51,11 +50,7 @@ export class SearcherComponent implements OnInit {
     console.log(searcherForm.value.searchUser);
     this.currentSearchString = searcherForm.value.searchUser;
 
-    this.githubApiService.getUsers(this.currentSearchString, this.page)
-    .subscribe((users)=> {
-      this.savedCurrentResults(users);
-      this.users = users;
-    });
+    this.callService(this.page);
 
     this.githubApiService.getTotalResults(this.currentSearchString).subscribe((value) => {
       this.totalResults = value;
@@ -65,23 +60,15 @@ export class SearcherComponent implements OnInit {
       // this.total = value;
       // this.limit = this.resultsPerPage;
     });
-
-    console.log("results: ");
-    console.log(this.totalResults);
-    console.log("---");
   }
 
   savedCurrentResults(results: Users[]) {
     console.log("Saving current values...");
     console.log(results);
     for(let i in results) {
+      console.log(results[i]);
       this.saveResults.push(results[i]);
     }
-  }
-
-  //in saved array
-  callForPage() {
-
   }
 
   getPagesToShow(totalResults: number) {
@@ -93,6 +80,7 @@ export class SearcherComponent implements OnInit {
     this.page = n;
     console.log("go to page: " + n);
     //recall endpoint
+    this.callService(this.page);
   }
 
   onNext(): void {
@@ -100,22 +88,30 @@ export class SearcherComponent implements OnInit {
     console.log("Go to page: " + this.page);
 
     //recall endpoint
-    this.githubApiService.getUsers(this.currentSearchString, this.page)
+    this.callService(this.page);
+  }
+
+  onPrev(): void {
+    this.page--;
+
+    //recall endpoint
+    //thats mean we have a array preloaded
+    let firstElement = (this.page-1) * 100;
+    let lastElement = (this.page*100) - 1;
+
+    this.users = this.saveResults.slice(firstElement, lastElement);
+    console.log("Actual users: ");
+    console.log(this.saveResults);
+  }
+
+  callService(page) {
+    this.githubApiService.getUsers(this.currentSearchString, page)
     .subscribe((users)=> {
       this.savedCurrentResults(users);
       this.users = users;
       console.log("actual users: ");
       console.log(this.users);
     });
-    console.log("blahhh");
   }
-
-  onPrev(): void {
-    this.page--;
-    //recall endpoint
-
-  }
-
-
 
 }
